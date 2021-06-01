@@ -167,7 +167,7 @@
                         <div class="restriction-group add-restriction text-center">
                             <div>
                                 <a class="add-form" data-toggle="modal" data-target="#createRestrictionForm">
-                                    <span> <i class="fas fa-plus"></i> เพิ่มข้อกำจัดอาหาร </span>
+                                    <span> <i class="fas fa-plus"></i> เพิ่มข้อจำกัดอาหาร </span>
                                 </a>
                             </div>
                         </div>
@@ -335,9 +335,9 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <select  value="" name="b-year" class="form-control {{$errors->hasBag('editkid')? 'is-invalid':''}}">
-                                    @for ($x = 2020; $x >= 2000; $x--)
-                                        <option value="{{$x}}"> {{$x}} </option>
-                                    @endfor
+                                    @for ($x = date("Y"); $x > date("Y")-10; $x--)
+                                    <option value="{{$x}}"> {{$x}} </option>
+                                @endfor
                                 </select>
                             </div>
                         </div>

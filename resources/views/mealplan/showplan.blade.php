@@ -49,7 +49,7 @@
         @if ($hasAge == 1)
             <div id="meal-plan"></div>
         @else
-            <div class="text-center">กรุณาเลือกช่วงอายุเด็กสำหรับจัอาหาร</div>
+            <div class="text-center">กรุณาเลือกช่วงอายุเด็กสำหรับจัดอาหาร</div>
         @endif
     </div>
 </div>
