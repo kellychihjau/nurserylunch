@@ -30,6 +30,8 @@ $("#week-picker").datepicker({
         endDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 7);
         startLogDate = startDate;
         endLogDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + count);
+        localStorage.setItem("startDateOfWeek", startLogDate);
+        localStorage.setItem("weekHandle", 1);
 
         var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
         updateDate();

@@ -269,6 +269,7 @@
                 })
                 addFoodLogs(mealPlanData)
             })
+
         }
 
         function addFoodLogs(mealPlanData) {
@@ -285,6 +286,9 @@
                 },
                 success: function(data) {
                     $('#savedModal').modal('show');
+                    $('#savedModal').on('hidden.bs.modal', function (e) {
+                      history.back();
+                    })
                 }
             });
         }

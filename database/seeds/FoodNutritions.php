@@ -12,7 +12,7 @@ class FoodNutritions extends Seeder
      */
     public function run()
     {
-        $csv = array_map('str_getcsv', file('database/seeds/database/food_nutrition.csv'));
+        $csv = array_map('str_getcsv', file('database/seeds/database/foodnutrition_15June2021.csv'));
         foreach ($csv as $key => $item) {
             $nutrition = new Nutrition();
             $nutrition->food_id = $item[0];
