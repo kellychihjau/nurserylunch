@@ -127,7 +127,7 @@
                         <!-- <button id="" class="btn btn-outline btn-primary">สารอาหารรอง</button> -->
                         <div class="btn-group open">
                             <button data-toggle="dropdown" class="btn btn-outline btn-primary" aria-expanded="true"> 
-                                สารอาหารรอง
+                                วิตามินและแร่ธาตุ
                             </button>
                             <div class="dropdown-menu">
                                 <div class="row">

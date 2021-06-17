@@ -228,7 +228,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h4 class="title"> การเจริญเติบโต </h4>
-                            <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
+                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
+                            <div class="update">{{$kid->getGrowthUpdate()}}</div>
                         </div>
                         <div class="col-lg-6">
                             <a class="pull-right" data-toggle="modal" data-target="#createGrowthForm">
@@ -336,7 +337,7 @@
                             <div class="form-group col-md-4">
                                 <select  value="" name="b-year" class="form-control {{$errors->hasBag('editkid')? 'is-invalid':''}}">
                                     @for ($x = date("Y"); $x > date("Y")-10; $x--)
-                                    <option value="{{$x}}"> {{$x}} </option>
+                                    <option value="{{$x}}" {{$kid->getBirthYear() ==$x? 'selected' : ''}}> {{$x}} </option>
                                 @endfor
                                 </select>
                             </div>
@@ -606,29 +607,30 @@
             <!-- <div class="color-line "></div>             -->
             <div class="modal-body"> 
                 <h4 class="modal-title">เพิ่มข้อมูลการเจริญเติบโต</h4>
-                <form method="POST" action="/kid/creategrowth/{{$kid->id}}" class="form-horizontal">   
+                <form method="POST" action="/kid/creategrowth/{{$kid->id}}" class="form-horizontal growth-form">   
                     @csrf
                     <div class="form-group">
                         <label class="control-label">วันที่</label>
                         <div class="">
-                            <input type="date" id="" name="date" value="" class="form-control" placeholder="วว/ดด/ปปปป">
+                            <input type="date" id="" name="date" value="{{date('Y-m-d')}}" class="form-control" placeholder="วว/ดด/ปปปป">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">ส่วนสูง (ซม.)</label>
-                        <div class="">
-                            <input type="number" id="" name="height" step=".1" value="" class="form-control" >
+                        <div class="growth_input">
+                            <input type="number" id="" name="height" step=".1" value="" class="form-control growth-input" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">น้ำหนัก (กก.)</label>
-                        <div class="">
-                            <input type="number" id="" name="weight" step=".1" value="" class="form-control">
+                        <div class="growth_input">
+                            <input type="number" id="" name="weight" step=".1" value="" class="form-control growth-input">
                         </div>
                     </div>
+                    <div class="alerts"></div>
                     <div class="text-center">
                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                        <button class="btn btn-primary btn-submit-check" type="button" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
                     </div>
                 </form>
             </div>
@@ -651,7 +653,7 @@
         <div class="modal-content">
             <div class="modal-body"> 
                 <h4 class="modal-title"> แก้ไขข้อมูลการเจริญเติบโต </h4>
-                <form method="POST" action="/kid/editgrowth/{{$kid->id}}" class="form-horizontal">   
+                <form method="POST" action="/kid/editgrowth/{{$kid->id}}" class="form-horizontal growth-form">   
                     @csrf
                     <input type="hidden" id="" name="growth_id" value="{{$entry->id}}">
                     <div class="form-group">
@@ -663,19 +665,21 @@
                     <div class="form-group">
                         <label class="control-label"> ส่วนสูง (ซม.) </label>
                         <div class="">
-                            <input type="number" id="" name="height" step=".1" value="{{$entry->height}}" class="form-control" >
+                            <input type="number" id="" name="height" step=".1" value="{{$entry->height}}" class="form-control growth-input" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label"> น้ำหนัก (กก.) </label>
                         <div class="">
-                            <input type="number" id="" name="weight" step=".1" value="{{$entry->weight}}" class="form-control">
+                            <input type="number" id="" name="weight" step=".1" value="{{$entry->weight}}" class="form-control growth-input">
                         </div>
                     </div>
+                    <div class="alerts"></div>
+                      
                     <div class="text-center">
                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
-                        <!-- <button class="btn btn-danger pull-right" type="submit" name="create" value="">ลบออก</button> -->
+                        <button class="btn btn-primary btn-submit-check" type="button" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                        <!-- <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button> -->
                     </div>
                 </form>
             </div>
@@ -684,4 +688,31 @@
 </div>
 @endforeach
 
+@endsection
+
+
+@section('script')
+    <script type="application/javascript">
+       $(".btn-submit-check").click(function(){
+            var empty = true;
+            var form = $(this).parents(".growth-form").first();
+            $(form).find(".growth-input").each(function(){
+                if ($(this).val() != ""){
+                    empty = false; 
+                    return false;
+                    // break;
+                }
+            });
+            if(empty){
+                var alertDiv = $(form).find(".alerts").first();
+                alertDiv.addClass("alert alert-danger");
+                alertDiv.append("กรุณากรอกข้อมูลส่วนสูง หรือ น้ำหนัก อย่างน้อย 1 ช่อง")
+                console.log("empty");
+            }else{
+                form.submit();
+            }
+       });
+       
+
+    </script>
 @endsection

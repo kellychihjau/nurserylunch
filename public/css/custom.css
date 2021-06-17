@@ -329,6 +329,9 @@ input[type=checkbox] {
 .login-panel{
     min-height: 100vh;
 }
+.logo-img {
+    height: 100%;
+}
 .login-panel.left{
     background-image: url("/images/login-bg.png");
 }

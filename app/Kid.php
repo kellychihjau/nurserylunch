@@ -153,6 +153,22 @@ class Kid extends Model
         }
 
     }
+
+    public function getGrowthUpdate(){
+        //$milk_update = \Carbon\Carbon::parse($this->milk_update)->diff(\Carbon\Carbon::now())->format('%y ปี %m เดือน %d วัน');
+
+        // $entry = GrowthEntry::where('kid_id', $this->id)->orderBy('date', 'ASC')->first();
+        $entry = $this->growth_entries()->latest('updated_at')->first();
+        \Carbon\Carbon::setLocale('th');
+        if ($entry == null){
+            return "ไม่มีข้อมูลการอัพเดท";
+        }else{
+            $growth_update = \Carbon\Carbon::parse($entry->updated_at)->diffForHumans();
+            return "อัพเดทล่าสุดเมื่อ ".$growth_update;
+        }
+
+    }
+
     public function getSex(){
     	return $this->sex == "male" ? "ชาย" : "หญิง";
     }
