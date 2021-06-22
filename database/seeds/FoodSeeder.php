@@ -24,5 +24,6 @@ class FoodSeeder extends Seeder
             $food->food_eng = $item[3];
             $food->save();
         }
+        
     }
 }

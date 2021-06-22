@@ -12,7 +12,7 @@ class RecipeSeeder extends Seeder
      */
     public function run()
     {
-        $csv = array_map('str_getcsv', file('database/seeds/database/foodrecipe_unitchange.csv'));
+        $csv = array_map('str_getcsv', file('database/seeds/database/foodrecipe_18June2021.csv'));
         foreach ($csv as $key => $item) {
             $recipe = new FoodRecipe();
             $recipe->food_id = $item[0];
