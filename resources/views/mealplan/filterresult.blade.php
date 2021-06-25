@@ -59,6 +59,12 @@
     function onSortableReceive(event, ui) {
         var parent = $(event.target).parents('.meal-panel');
         calculateNutrition(parent);
+
+        if(foodType != 8 && foodType != 22){
+                var foodItem = ui.item;
+                var foodId = foodItem.children(":first").attr("id");
+                checkMealType(foodId, foodType, foodItem);
+            }
     }
 
 

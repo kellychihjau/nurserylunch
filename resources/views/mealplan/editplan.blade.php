@@ -317,6 +317,7 @@
         }
 
         function onSortableReceive(event, ui) {
+            console.log("onSortableReceive");
             var dayPanel = $(event.target).parents('.meal-panel');
             calculateNutrition(dayPanel);
             //cloneFoodItem(foodItem);
@@ -546,6 +547,7 @@
                 success: function(data) {
                     // console.log(data);
                     $("#filter-result").html(data);
+                    
                 }
 
             });
